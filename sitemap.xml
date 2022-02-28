@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://example.com/eleventy-blog-1/posts/firstpost/</loc>
+    <lastmod>2022-01-16</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/eleventy-blog-1/posts/secondpost/</loc>
+    <lastmod>2022-01-30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/eleventy-blog-1/posts/thirdpost/</loc>
+    <lastmod>2022-02-21</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/eleventy-blog-1/posts/fourthpost/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/eleventy-blog-1/about/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/eleventy-blog-1/posts/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/eleventy-blog-1/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/eleventy-blog-1/page-list/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/eleventy-blog-1/tags/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/eleventy-blog-1/tags/javascript/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/eleventy-blog-1/tags/web-components/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/eleventy-blog-1/tags/npm/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/eleventy-blog-1/tags/node/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/eleventy-blog-1/tags/vscode/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/eleventy-blog-1/tags/second-tag/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/eleventy-blog-1/tags/api/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/eleventy-blog-1/tags/devops/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/eleventy-blog-1/tags/opensource/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://example.com/eleventy-blog-1/tags/posts-with-two-tags/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+</urlset>

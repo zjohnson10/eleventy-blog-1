@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Back End Development with APIs</title>
+    <meta name="description" content="This post is regarding doing back end development and integrating APIs into your web component.">
+    <link rel="stylesheet" href="/eleventy-blog-1/css/index.css">
+    <link rel="stylesheet" href="/eleventy-blog-1/css/prism-base16-monokai.dark.css">
+    <link rel="alternate" href="/eleventy-blog-1/feed/feed.xml" type="application/atom+xml" title="Zach Johnson&#39;s Blog">
+    <link rel="alternate" href="/eleventy-blog-1/feed/feed.json" type="application/json" title="Zach Johnson&#39;s Blog">
+  </head>
+  <body>
+    <header>
+      <h1 class="home"><a href="/eleventy-blog-1/">Zach Johnson&#39;s Blog</a></h1>
+      <ul class="nav">
+        <li class="nav-item"><a href="/eleventy-blog-1/">Home</a></li>
+        <li class="nav-item"><a href="/eleventy-blog-1/posts/">Posts</a></li>
+        <li class="nav-item"><a href="/eleventy-blog-1/about/">About Me</a></li>
+      </ul>
+    </header>
+
+    <main class="tmpl-post">
+
+    
+
+      <h1>Back End Development with APIs</h1>
+
+<time datetime="2022-01-30">30 Jan 2022</time><a href="/eleventy-blog-1/tags/api/" class="post-tag">api</a><a href="/eleventy-blog-1/tags/javascript/" class="post-tag">javascript</a><a href="/eleventy-blog-1/tags/devops/" class="post-tag">devops</a><a href="/eleventy-blog-1/tags/opensource/" class="post-tag">opensource</a>
+
+<p>Today, I will be covering how we can extract data from an API and mapping it on the Google Maps API. I will also be covering using that data in a <code>wikipedia-query</code> tag to display a wikipedia page about such contents.</p>
+<h3 id="geoip" tabindex="-1">GeoIP <a class="direct-link" href="#geoip" aria-hidden="true">#</a></h3>
+<p>We can use an app called GeoIP, linked <a href="https://freegeoip.app/json/">here</a>, that can get geographical information, such as coordinates, about a device and send it back to the user as a JSON response. The response from GeoIP is based on your IP address, so if you are using a VPN it will give you the geo information of wherever your VPN is connected to and not your actual physical location. This is what the API response looks like in formatted JSON:</p>
+<pre><code>{
+&quot;ip&quot;: &quot;104.39.60.125&quot;,
+&quot;country_code&quot;: &quot;US&quot;,
+&quot;country_name&quot;: &quot;United States&quot;,
+&quot;region_code&quot;: &quot;PA&quot;,
+&quot;region_name&quot;: &quot;Pennsylvania&quot;,
+&quot;city&quot;: &quot;State College&quot;,
+&quot;zip_code&quot;: &quot;16801&quot;,
+&quot;time_zone&quot;: &quot;America/New_York&quot;,
+&quot;latitude&quot;: 40.7957,
+&quot;longitude&quot;: -77.8618,
+&quot;metro_code&quot;: 574
+}
+</code></pre>
+<h3 id="getting-json-response-using-fetch-command" tabindex="-1">Getting JSON Response Using fetch Command <a class="direct-link" href="#getting-json-response-using-fetch-command" aria-hidden="true">#</a></h3>
+<p>We first want to establish the GeoIP API as in instance in our class constructor by saying <code>this.locationEndpoint = 'https://freegeoip.app/json/';</code>. From here we will use the fetch command and call this <code>locationEndpoint</code> in a method called getGEOIPData:</p>
+<pre><code>async getGEOIPData() {
+    const IPClass = new UserIP();
+    const userIPData = await IPClass.updateUserIP();
+    return fetch(this.locationEndpoint + userIPData.ip)
+      .then(resp =&gt; {
+        if (resp.ok) {
+          return resp.json();
+        }
+        return false;
+      })
+      .then(data =&gt; {
+        console.log(data);
+        this.long = data.longitude;
+        this.lat = data.latitude;
+        this.city = data.city;
+        this.state = data.region_name;
+        return data;
+      });
+  }
+</code></pre>
+<p>The fetch command simply stated goes to that webpage and retrieves whatever data we are telling to retrieve or whatever data the webpage has to offer. In this case, the GeoIP webpage returns a JSON response, so that response is assigned to the <code>data</code> instance we see in the <code>.then()</code> call.</p>
+<p>After we receive the response, we can assign that response data attributes into the attributes of our class. This is our latitude and longitude coordinates that the GeoIP API gives us assigned into <code>this.lat</code> and <code>this.long</code> respectively.</p>
+<h3 id="using-fetch-response-to-map-a-location" tabindex="-1">Using fetch response to map a location <a class="direct-link" href="#using-fetch-response-to-map-a-location" aria-hidden="true">#</a></h3>
+<p>For this next portion, we will use the Google Maps iframe API, which allows us to embed a Google Maps interactive image into our html page. We will do this in the <code>render()</code> function of our code. We define the url of the Google Maps that we will use with our <code>this.lat</code> and <code>this.long</code> coordinates from before. Then, send this url into an html tag that shows this map on our webpage.</p>
+<pre><code>render() {
+    // this function runs every time a properties() declared variable changes
+    // this means you can make new variables and then bind them this way if you like
+    const url = `https://maps.google.com/maps?q=${this.lat},${this.long}&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed`;
+    return html`&lt;iframe title=&quot;Where you are&quot; src=&quot;${url}&quot;&gt;&lt;/iframe&gt; 
+  }
+</code></pre>
+<h3 id="wiring-data-into-a-wikipedia-query-tag" tabindex="-1">Wiring data into a <code>wikipedia-query</code> tag <a class="direct-link" href="#wiring-data-into-a-wikipedia-query-tag" aria-hidden="true">#</a></h3>
+<p>Now that we have established our ability to retrieve data from APIs using <code>fetch()</code>, we can use this data to embed a wikipedia article on our page. In order to do this, we have to import the wikipedia-query dependency into our project with:<br>
+<code>import '@lrnwebcomponents/wikipedia-query/wikipedia-query.js';</code>. From here we can embed wikipedia articles on our webpage using an html tag inside the <code>render()</code> function.</p>
+<pre><code>&lt;wikipedia-query search=&quot;${this.city}, ${this.state}&quot;&gt;&lt;/wikipedia-query&gt;
+&lt;wikipedia-query search=&quot;${this.city}&quot;&gt;&lt;/wikipedia-query&gt;
+&lt;wikipedia-query search=&quot;${this.state}&quot;&gt;&lt;/wikipedia-query&gt;`;
+</code></pre>
+<p>The tags above represent three different possible entries into this wikipedia-query search. The three are a city and state combination, only a city, or only a state. We used the data from the fetch command from the GeoIP API to get the current city and state we are in. In the API response, state is listed as <code>region_name</code>, so be careful when translating the response over. You should now successfully have three wikipedia articles embedded into your page. This is what one might look like:<br>
+<img src="https://dev-to-uploads.s3.amazonaws.com/uploads/articles/bg2ectipkbld9tkm494y.png" alt="Image description"></p>
+<p>Congratulations, you have successfully integrated two APIs into your webpage! The source code used for this project can be found <a href="https://github.com/zjohnson10/ip-project/tree/master/src">here</a>.</p>
+
+<hr>
+<ul><li>Next: <a href="/eleventy-blog-1/posts/thirdpost/">This is my third post.</a></li><li>Previous: <a href="/eleventy-blog-1/posts/firstpost/">Basic Web Components with Open-wc, npm, node.js, and VScode</a></li>
+</ul>
+
+    </main>
+
+    <footer></footer>
+
+    <!-- Current page: /eleventy-blog-1/posts/secondpost/ -->
+  </body>
+</html>
