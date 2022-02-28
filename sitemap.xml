@@ -47,6 +47,11 @@
   </url>
   
   <url>
+    <loc>https://example.com/eleventy-blog-1/tags/second-tag/</loc>
+    <lastmod>2022-02-28</lastmod>
+  </url>
+  
+  <url>
     <loc>https://example.com/eleventy-blog-1/tags/javascript/</loc>
     <lastmod>2022-02-28</lastmod>
   </url>
@@ -68,11 +73,6 @@
   
   <url>
     <loc>https://example.com/eleventy-blog-1/tags/vscode/</loc>
-    <lastmod>2022-02-28</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://example.com/eleventy-blog-1/tags/second-tag/</loc>
     <lastmod>2022-02-28</lastmod>
   </url>
   
